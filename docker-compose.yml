@@ -1,56 +1,31 @@
-version: '3.7'
-
+version: "3"
 services:
-  server:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    image: todo-server
-    container_name: todo-node-server
-    command: /usr/src/app/node_modules/.bin/nodemon server.js
-    volumes:
-      - ./server/:/usr/src/app
-      - /usr/src/app/node_modules
+  react-app:
+    image: sekolahdevopscilsy/mern-docker_client
+    stdin_open: true
+    ports: 
+      - "3000:3000"
+    networks:
+      - mern-app
+  api-server:
+    image: sekolahdevopscilsy/mern-docker_server
     ports:
       - "4000:4000"
+    networks:
+      - mern-app
     depends_on:
       - mongo
-    env_file: ./backend/.env
-    environment:
-      - NODE_ENV=development
-    networks:
-      - app-network
   mongo:
-    image: mongo
-    volumes:
-      - data-volume:/data/db
+    image: mongo:3.6.19-xenial
     ports:
       - "27017:27017"
     networks:
-      - app-network
-  client:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    image: todo-client
-    container_name: todo-react-client
-    command: npm start
+      - mern-app
     volumes:
-      - ./client/:/usr/app
-      - /usr/app/node_modules
-    depends_on:
-      - server
-    ports:
-      - "3000:3000"
-    networks:
-      - app-network
-
+      - mongo-data:/data/db
 networks:
-    app-network:
-        driver: bridge
-
+  mern-app:
+    driver: bridge
 volumes:
-    data-volume:
-    node_modules:
-    web-root:
-      driver: local
+  mongo-data:
+    driver: local
