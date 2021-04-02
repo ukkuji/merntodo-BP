@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+# Mern Todo-Apps with Docker
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Containers
 
-## Available Scripts
+* `client` with React on `https://localhost:3000` route
+* `server` with Express on `https://localhost:5000` route
+* `mongo` with MongoDB
+* `adminmongo` with AdminMongo on `http://localhost:1234` route
 
-In the project directory, you can run:
+Docker images available
+* `client` >> [sekolahdevopscilsy/mern-docker_client](https://hub.docker.com/repository/docker/sekolahdevopscilsy/client)
+* `server` >> [sekolahdevopscilsy/mern-docker_server](https://hub.docker.com/repository/docker/sekolahdevopscilsy/server)
 
-### `npm start`
+## Usage
 
-Runs the app in the development mode.\
-Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
+You can use `docker-compose up -d` command to deploy the container, or for every container separately, you can use `docker-compose up -d [container_name] client server adminmongo`
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Get in to container and install more dependecies with `docker exec -it server /bin/sh` or `docker exec -it client /bin/sh` and then `npm install whatewer`.
 
-### `npm test`
+Get logs from container to check everything is running correctly with `docker logs --tail 50 server` or `docker logs --tail 50 client`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Shut down containers with `docker-compose down`.
 
-### `npm run build`
+If you change `Dockerfile` rebuild container with `docker-compose build server`. Container names are `client`, `server`, `mongo` and `adminmongo`.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Access React app on `http://localhost:3000` and test the server on `https://localhost:5000/api/message`. Generate your own ssl keys and put them in `/security` folder if you like. Connection to the mongodb is in the `/config/dev.js`. Access adminmongo on `http://localhost:1234`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Preview
+### Todos List View
+![Todos List View](./screenshots/ViewToDo.PNG?raw=true "Todos List View")
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Create Todo
+![Create Todo](./screenshots/createTodo.PNG?raw=true "Create Todo")
 
-### `npm run eject`
+### Express Message
+![Express Message](./screenshots/ExpressMessagePNG?raw=true "Edit Todo")
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Credits
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+CRUD Todo app repo is here [sdcilsy/mern-todo-app](https://github.com/sdcilsy/mern-todo-app), based on the tutorial below [The MERN Stack Tutorial — Building A React CRUD Application From Start To Finish](https://medium.com/codingthesmartway-com-blog/the-mern-stack-tutorial-building-a-react-crud-application-from-start-to-finish-part-1-d8d701c2995).
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Docker tutorial is here [How to create a full stack React/Express/MongoDB app using Docker](https://medium.freecodecamp.org/create-a-fullstack-react-express-mongodb-app-using-docker-c3e3e21c4074).
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Credit for this dockerized MERN stack [nemanjam/mern-docker](https://github.com/nemanjam/mern-docker)
 
-## Learn More
+## Additional notes
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Tested on Linux Mint 20.1 / Ubuntu 20.04. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+For nodemon restart to work there is `-L` flag in `"server": "nodemon -L server.js"` in `package.json`. 
 
-### Code Splitting
+For create-react-app to live reload there is `CHOKIDAR_USEPOLLING=true` environment var in `docker-compose.yml`. 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+For mongo volume to work in the Windows VirtualBox shared folder there is `volumes: mongodata:`. 
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Note that `command` in the `docker-compose.yml` overrides the `CMD` in the `Dockerfile`.
