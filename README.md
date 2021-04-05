@@ -25,3 +25,12 @@ cd frontend
 npm install
 npm start
 ```
+
+## Build Frontend
+Change base url first
+
+```
+npm build
+cd build
+python3 -m http.server 8080
+```
