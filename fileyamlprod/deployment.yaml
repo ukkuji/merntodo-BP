@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-app
+  labels:
+    app: frontend-app
+spec:
+  selector:
+    matchLabels:
+      app: frontend-app
+  template:
+    metadata:
+      labels:
+        app: frontend-app
+    spec:
+      containers:
+      - name: frontend-app
+        image: andiukku/frontimage:prod1
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-app    
+  labels:
+    app: backend-app
+spec:
+  selector:
+    matchLabels:
+      app: backend-app
+  template:
+    metadata:
+      labels:
+        app: backend-app
+    spec:
+      containers:
+      - name: backend-app
+        image: andiukku/backendimage:latest
+        env:
+        - name: SERVER
+          value: "mongodb://admin:danmerasahina@172.20.62.217:27017/todos"
+        
