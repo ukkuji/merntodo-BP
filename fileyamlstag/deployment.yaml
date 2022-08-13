@@ -15,9 +15,11 @@ spec:
     spec:
       containers:
       - name: frontend-app
-        image: andiukku/frontimage:stag1
+        image: andiukku/frontend:latest
+        env: 
+        - name: "REACT_APP_BACKEND_BASE_URL" 
+          value: "http://stagingbackend.andisyukur.xyz" 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -35,8 +37,8 @@ spec:
     spec:
       containers:
       - name: backend-app
-        image: andiukku/backendimage:latest
+        image: andiukku/backend:latest
         env:
-        - name: SERVER
-          value: "mongodb://admin:danmerasahina@172.20.55.184:27017/todos"
+        - name: "REACT_APP_DATABASE_HOST"
+          value: "database-staging.c0elfcmpl7hd.ap-southeast-1.rds.amazonaws.com"
         

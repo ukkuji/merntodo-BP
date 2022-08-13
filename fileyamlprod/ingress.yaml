@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules: 
-  - host: feprodtodo.andisyukur.xyz
+  - host: productionfrontend.andisyukur.xyz
     http: 
       paths:
       - path: /
@@ -28,7 +28,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules: 
-  - host: beprodtodo.andisyukur.xyz
+  - host: productionbackend.andisyukur.xyz
     http: 
       paths:
       - path: /
