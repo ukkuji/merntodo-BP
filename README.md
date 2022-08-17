@@ -44,3 +44,10 @@ python3 -m http.server 8080
 8. helm install nginxctl
 9. helm install chart yang berisi deployment dan teman2nya
 10. happy troubleshooting 
+-cluster
+-rds
+-create user, grant, dump ec2 master
+-install nginx-controller helm
+-arahkan route53 ke nginxcontroller
+-kubectl create namespace staging
+-kubectl create namespace staging
