@@ -40,5 +40,5 @@ spec:
         image: andiukku/backend:latest
         env:
         - name: "REACT_APP_DATABASE_HOST"
-          value: "database-staging.c0elfcmpl7hd.ap-southeast-1.rds.amazonaws.com"
+          value: "database-staging.cndsnxyiozsm.us-east-1.rds.amazonaws.com"
         
